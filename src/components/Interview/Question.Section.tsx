@@ -115,7 +115,7 @@ export const InterviewQuestions = ({
           <p className="h3 line-clamp-2 max-w-prose truncate text-pretty text-center font-bold">
             Result Not Found
           </p>
-          <p className="line-clamp-2 max-w-prose truncate text-pretty text-center leading-snug text-muted-foreground">
+          <p className="line-clamp-2 w-4/5 max-w-prose text-pretty text-center leading-snug text-muted-foreground">
             Whoops... this information is not available at the moment
           </p>
         </div>

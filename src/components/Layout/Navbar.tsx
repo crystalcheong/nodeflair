@@ -35,7 +35,7 @@ export const Navbar = () => {
         'transition-all',
         'sticky inset-x-0 top-0 z-40',
         'pt-3',
-        'border-b bg-background/80 backdrop-blur',
+        'border-b-2 border-b-primary bg-background/80 backdrop-blur',
       )}
     >
       <main
