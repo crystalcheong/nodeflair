@@ -1,11 +1,4 @@
-import { Navigate } from '@/router'
+import InterviewsPage from '@/pages/interviews'
 
-const IndexPage = () => {
-  return (
-    <Navigate
-      to={'/interviews'}
-      unstable_viewTransition
-    />
-  )
-}
+const IndexPage = InterviewsPage
 export default IndexPage
