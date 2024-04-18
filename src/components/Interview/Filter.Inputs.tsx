@@ -15,6 +15,7 @@ import {
 } from '@/components/Core/ui/Form'
 import { RadioGroup, RadioGroupItem } from '@/components/Core/ui/Radio'
 import { ScrollArea } from '@/components/Core/ui/ScrollArea'
+import { Separator } from '@/components/Core/ui/Separator'
 import {
   InterviewFilterFormFieldInfo,
   useInteviewContext,
@@ -67,15 +68,15 @@ export const InterviewFilterCombobox = ({
                                 onCheckedChange={(checked) => {
                                   return checked
                                     ? field.onChange([
-                                        ...field.value,
-                                        item.value,
-                                      ])
+                                      ...field.value,
+                                      item.value,
+                                    ])
                                     : field.onChange(
-                                        field.value?.filter(
-                                          (value: typeof item.value) =>
-                                            value !== item.value,
-                                        ),
-                                      )
+                                      field.value?.filter(
+                                        (value: typeof item.value) =>
+                                          value !== item.value,
+                                      ),
+                                    )
                                 }}
                               />
                             </FormControl>
@@ -114,6 +115,7 @@ export const InterviewFilterRadio = ({
       render={({ field }) => (
         <FormItem className="space-y-3">
           <FormLabel>Sort by</FormLabel>
+          <Separator className='!mt-2' />
           <FormControl>
             <RadioGroup
               onValueChange={field.onChange}
