@@ -27,7 +27,6 @@ import { ThemeButton } from '@/components/Layout/Theme.Button'
 import { SEO } from '@/data/static/seo'
 import { cn } from '@/utils/dom'
 import { QuestionMarkCircledIcon } from '@radix-ui/react-icons'
-import { useState } from 'react'
 
 export const Navbar = () => {
   return (
@@ -65,31 +64,30 @@ Navbar.Logo = Logo
 Navbar.Theme = ThemeButton
 
 const NavbarAbout = () => {
-  const [open, setOpen] = useState<boolean>(false)
   return (
-    <Dialog
-      open={open}
-      onOpenChange={setOpen}
-    >
+    <Dialog>
       <DialogTrigger asChild>
         <Button
           variant="outline"
           size="icon"
         >
           <QuestionMarkCircledIcon />
+          <span className="sr-only">About</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>About</DialogTitle>
-          <DialogDescription className="max-w-prose truncate text-pretty text-start">
+      <DialogContent className="flex flex-col flex-wrap overflow-hidden sm:max-w-md">
+        <DialogHeader className="w-full text-pretty">
+          <DialogTitle className="max-w-full truncate text-pretty">
+            About
+          </DialogTitle>
+          <DialogDescription className="max-w-prose text-pretty text-start">
             This demo is completed as part of NodeFlair's Software Engineering
             Intern assessment.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-row place-items-center gap-2">
-          <span className="small">Reference: </span>
+        <div className="flex flex-row flex-wrap place-items-center gap-2">
+          <span className="small">Reference:</span>
           <Button
             variant={'link'}
             className="h-auto p-0"
@@ -103,7 +101,7 @@ const NavbarAbout = () => {
           </Button>
         </div>
 
-        <DialogFooter className="flex flex-row place-items-center gap-2 sm:justify-start">
+        <DialogFooter className="flex flex-row flex-wrap place-items-center gap-2 sm:justify-start">
           <span className="small">Done by: </span>
           <Button
             variant={'link'}
@@ -128,6 +126,7 @@ const NavbarAbout = () => {
     </Dialog>
   )
 }
+
 Navbar.About = NavbarAbout
 
 //#region  //*=========== MENU ===========
@@ -220,19 +219,20 @@ export const NavbarMenu = () => {
               className="!mt-0 mr-2"
             >
               {!isTrigger && (
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  <a
-                    href={route.href}
-                    target="_blank"
-                    className="flex place-items-center gap-1 capitalize"
-                  >
-                    <span>{route.label}</span>
-                    {route?.tag && (
-                      <span className="rounded bg-primary px-1 text-[0.5rem] font-bold uppercase text-background">
-                        {route.tag}
-                      </span>
-                    )}
-                  </a>
+                <NavigationMenuLink
+                  className={cn(
+                    navigationMenuTriggerStyle(),
+                    'flex place-items-center gap-1 capitalize',
+                  )}
+                  href={route.href}
+                  target="_blank"
+                >
+                  <span>{route.label}</span>
+                  {route?.tag && (
+                    <span className="rounded bg-primary px-1 text-[0.5rem] font-bold uppercase text-background">
+                      {route.tag}
+                    </span>
+                  )}
                 </NavigationMenuLink>
               )}
 
