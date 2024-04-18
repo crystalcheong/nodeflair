@@ -151,9 +151,9 @@ export const NavbarMenu = () => {
     },
     {
       label: 'Interviews',
-      // href: `${SEO.url}/interviews`,
-      href: `/interviews`,
-      tag: 'new',
+      href: `${SEO.url}/interviews`,
+      // href: `/interviews`,
+      tag: 'actual',
     },
     {
       label: 'Salaries',
