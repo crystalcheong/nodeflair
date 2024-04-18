@@ -9,32 +9,14 @@ export default defineConfig({
   server: {
     port: Number(process.env.VITE_PORT) || 3000, // Set the port from VITE_PORT or fallback to 3000
 
-    proxy: {
-      '/api': {
-        target: 'https://nodeflair.com/api',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-    },
-
+    /** @see src/data/clients/nodeflair.api.ts */
     // proxy: {
     //   '/api': {
-    //     target: 'https://nodeflair.com',
+    //     target: 'https://nodeflair.com/api',
     //     changeOrigin: true,
-    //     rewrite: path => path.replace(/^\/api/, ''),
-    //     // configure: (proxy, options) => {
-    //     //   proxy.on('proxyReq', function (proxyReq, req, res, options) {
-    //     //     // Remove or change the Referer header
-    //     //     proxyReq.setHeader('Referer', 'https://nodeflair.com')
-    //     //     proxyReq.setHeader('Origin', 'https://nodeflair.com')
-    //     //     // Optionally remove other problematic headers
-    //     //     proxyReq.removeHeader('sec-fetch-dest')
-    //     //     proxyReq.removeHeader('sec-fetch-mode')
-    //     //     proxyReq.removeHeader('sec-fetch-site')
-    //     //   })
-    //     // }
-    //   }
-    // }
+    //     rewrite: (path) => path.replace(/^\/api/, ''),
+    //   },
+    // },
   },
   plugins: [million.vite({ auto: true }), react(), generouted()],
   resolve: {
