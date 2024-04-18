@@ -91,7 +91,7 @@ export const InterviewQuestions = ({
           {filteredQuestions.length}&nbsp;questions
         </p>
 
-        <InterviewFilters.Drawer
+        <InterviewFilters.Dropdown
           className="max-lg:!hidden"
           excludedFieldTypes={['combobox']}
         />

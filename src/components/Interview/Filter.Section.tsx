@@ -13,6 +13,11 @@ import {
   DrawerTrigger,
 } from '@/components/Core/ui/Drawer'
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/Core/ui/Dropdown-Menu'
+import {
   InterviewFilterCombobox,
   InterviewFilterRadio,
 } from '@/components/Interview/Filter.Inputs'
@@ -62,6 +67,87 @@ export const InterviewFilters = ({
 
 InterviewFilters.Combobox = InterviewFilterCombobox
 InterviewFilters.Radio = InterviewFilterRadio
+
+type InterviewFiltersDropdown = HTMLAttributes<HTMLDivElement> & {
+  excludedFieldTypes?: InterviewFilterFormField[]
+}
+export const InterviewFiltersDropdown = ({
+  excludedFieldTypes = [],
+  className,
+  children,
+  ...rest
+}: InterviewFiltersDropdown) => {
+  const { form, onSubmit, fields: filters } = useInteviewContext()
+  const formValues = form.getValues()
+
+  return (
+    <aside
+      className={cn(
+        'grid grid-cols-2 gap-2 max-[400px]:grid-cols-1',
+        'flex-row flex-wrap sm:flex sm:place-items-center',
+        'max-sm:*:w-full',
+        className,
+      )}
+      {...rest}
+    >
+      {filters.map((filter) => {
+        const isValidSchemaKey = InterviewFilterFormSchemaKeys.safeParse(
+          filter.name,
+        ).success
+        if (!isValidSchemaKey) return
+
+        const schemaKey = InterviewFilterFormSchemaKeys.parse(filter.name)
+        const selected = formValues[schemaKey]
+        const isCounterNeeded =
+          filter.fieldType === 'combobox' &&
+          Array.isArray(selected) &&
+          !!selected.length
+        const isExcludedFieldType = excludedFieldTypes.includes(
+          filter.fieldType,
+        )
+
+        if (isExcludedFieldType) return null
+
+        return (
+          <DropdownMenu
+            key={`filter-${filter.name}`}
+            onOpenChange={(open) => {
+              if (!open) form.handleSubmit(onSubmit)()
+            }}
+          >
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  'flex flex-row !place-content-start place-items-center gap-2',
+                  isCounterNeeded && 'bg-muted',
+                )}
+              >
+                <span className="truncate whitespace-nowrap text-start capitalize	">
+                  {filter?.label ?? selected}
+                </span>
+
+                {isCounterNeeded && <Badge>{selected.length}</Badge>}
+
+                <ChevronDownIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56 px-4 pb-6">
+              {filter.fieldType === 'combobox' && (
+                <InterviewFilters.Combobox {...filter} />
+              )}
+              {filter.fieldType === 'radio' && (
+                <InterviewFilters.Radio {...filter} />
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )
+      })}
+      {children}
+    </aside>
+  )
+}
+InterviewFilters.Dropdown = InterviewFiltersDropdown
 
 type InterviewFiltersDrawer = HTMLAttributes<HTMLDivElement> & {
   excludedFieldTypes?: InterviewFilterFormField[]
